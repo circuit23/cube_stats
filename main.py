@@ -1,5 +1,4 @@
 import re
-from math import ceil
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -7,6 +6,7 @@ import seaborn as sns
 
 
 # TODO: create function for storing and retrieving stats from TinyDB and graphing on that instead
+# TODO:     bring in the timestamp as a unique ID for each solve
 # TODO: implement the ability to import any/all cstimer exports in the directory, without creating dupes in TinyDB
 
 
@@ -47,12 +47,12 @@ for penalty, time in pattern.findall(export):
 sns.set_style("darkgrid")
 
 # Lay out plot
-plt.plot(range(1, len(times) + 1), times, marker='o')
+plt.plot(range(1, len(times) + 1), times, label='Solve times', marker='o')
 plt.xticks(range(1, len(times) + 1))
-plt.yticks(range(0, ceil(max(times, key=lambda x: float(x)))))
+plt.yticks(range(0, np.ceil(max(times, key=lambda x: float(x))).astype(int)))
 plt.xlabel('Number of solves')
 plt.ylabel('Time in seconds')
-plt.title('Cube solving times')
+plt.title('Cube Solve Time Analysis')
 # Ao5, Ao12, Ao100
 if len(times) >= 5:
     plt.plot(*zip(*avg_over_x(times, 5)), label='Ao5', marker='o')
