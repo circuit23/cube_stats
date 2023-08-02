@@ -33,7 +33,7 @@ def avg_over_x(list_of_times, x):
 
 
 # Read the export file into a str object
-export = open('cstimer_20230708_203358.txt', 'r').read()
+export = open('cstimer_20230712_142241.txt', 'r').read()
 # Create a regex to match the actual penalties (like +2 or DNF) and times
 pattern = re.compile(r"\[\[(\d+),(\d+)]")
 # Extract the penalties and times, append them to the list
@@ -47,7 +47,7 @@ for penalty, time in pattern.findall(export):
 sns.set_style("darkgrid")
 
 # Lay out plot
-plt.plot(range(1, len(times) + 1), times, label='Solve times', marker='o')
+plt.plot(range(1, len(times) + 1), times, label='Solve times')
 plt.xticks(range(1, len(times) + 1))
 plt.yticks(range(0, np.ceil(max(times, key=lambda x: float(x))).astype(int)))
 plt.xlabel('Number of solves')
@@ -55,15 +55,15 @@ plt.ylabel('Time in seconds')
 plt.title('Cube Solve Time Analysis')
 # Ao5, Ao12, Ao100
 if len(times) >= 5:
-    plt.plot(*zip(*avg_over_x(times, 5)), label='Ao5', marker='o')
+    plt.plot(*zip(*avg_over_x(times, 5)), label='Ao5')
 if len(times) >= 12:
-    plt.plot(*zip(*avg_over_x(times, 12)), label='Ao12', marker='o')
+    plt.plot(*zip(*avg_over_x(times, 12)), label='Ao12')
 if len(times) >= 100:
-    plt.plot(*zip(*avg_over_x(times, 100)), label='Ao100', marker='o')
+    plt.plot(*zip(*avg_over_x(times, 100)), label='Ao100')
 
 # Mean line
 total_mean = np.mean(times)
-plt.axhline(total_mean, color='red', linestyle='--', label=f"Mean: {total_mean}")
+plt.axhline(total_mean, color='red', linestyle='--', label=f"Mean: {total_mean:.2f}")
 
 plt.legend()
 plt.show()
